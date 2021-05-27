@@ -10,7 +10,7 @@ player - player, default: player (optional)
 1 :
 BOOLEAN - selfaction (true), foreign action (false), default: true (optional)
 2 :
-strinG - display name of action (defaults to german) (optional)
+STRING - display name of action (defaults to german) (optional)
 3 :
 ARRAY (strings) - marker names for LZ, idx 0 is always prefix (defaults to "Unterstützung" + russian girls names) (optional)
 Returns:
@@ -29,7 +29,8 @@ _lznames = _lznames - [_lzPrefix];
 _helo = supply_helo_01;
 _crate = crate_01;
 
-diag_log["[_caller, _lzPrefix, _lznames, _helo, _crate]", [_caller, _lzPrefix, _lznames, _helo, _crate]];
+//diag_log["[_caller, _lzPrefix, _lznames, _helo, _crate]", [_caller, _lzPrefix, _lznames, _helo, _crate]];
+diag_log["display name: ",_displayname];
 _action = [
     "Request supply",
     _displayname,
@@ -61,4 +62,7 @@ _action = [
     {},
     [_caller, _lzPrefix, _lznames, _helo, _crate]
 ] call ace_interact_menu_fnc_createaction;
-[typeOf player, 1, ["ACE_Selfactions", "ACE_Equipment"], _action] call ace_interact_menu_fnc_addActiontoClass;
+
+["Man", 1, ["ACE_SelfActions"], _action, true] call ace_interact_menu_fnc_addActiontoClass;
+
+
