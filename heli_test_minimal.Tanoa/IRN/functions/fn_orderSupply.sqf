@@ -18,7 +18,7 @@ Returns:
 none
 */
 // todo replace caller with position of _caller
-params["_caller", "_crate", "_precise", "_markername"];
+params["_helo","_helipad","_caller", "_crate", "_precise", "_markername"];
 
 if (!isServer) exitwith {
     ["local call not allowed. called on non-server-machine with: %1", _this];
@@ -98,7 +98,7 @@ _prepareHelo = {
 };
 // will add waypoints for given Helo to drop supply at LZ + RTB
 _orderHelotoLZ = {
-    params ["_helo", "_lzObj", "_airport"];
+    params ["_helo", "_lzObj", "_helipad"];
     
     _pilot = currentpilot _helo;
     _grp = group _pilot;
@@ -117,19 +117,15 @@ _orderHelotoLZ = {
     _wp waypointAttachVehicle _lzObj;
     
     // RTB, afterwards land at airport obj.
-    _wp = _grp addWaypoint [getPos _airport, 0, 3, "RTB"];
+    _wp = _grp addWaypoint [getPos _helipad, 0, 3, "RTB"];
     _wp setwaypointStatements ["true", "(vehicle this) land 'land';
     (vehicle this) setVariable ['RTB', true, true];"];
 };
 
 // -------------------------------------------------------------------------- !method declaration, var declaration
-_helo = supply_helo_01;
-	// todo make into function parameter
-_airport = airport_01;
-// todo make into function parameter
 _var = _helo getVariable "RTB";
 if (isnil "_var") then {
-    [getPos _airport, "heliport"]call IRN_fnc_marker;
+    [getPos _helipad, "heliport"]call IRN_fnc_marker;
     diag_log ["heliport marker created"];
 };
 // -------------------------------------------------------------------------- !var declaration
@@ -152,7 +148,7 @@ if ((_helo getVariable ["RTB", true]) && count ropeAttachedObjects _helo == 0) t
 } else {
     systemChat "Neue landezone wird gesucht.";
 };
-[_helo, _lzObj, _airport] call _orderHelotoLZ;
+[_helo, _lzObj, _helipad] call _orderHelotoLZ;
 _helo setVariable ["RTB", false, true];
 // mark as busy
 // systemChat "marking as RTB: false";

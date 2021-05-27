@@ -35,7 +35,7 @@ _items = getitemCargo _crate;
 _mags = getmagazineCargo _crate;
 _weapons = weaponsItemsCargo _crate;
 _containers = everyContainer _crate;
-// _backpackitems = backpackCargo _crate;
+ _backpackitems = backpackCargo _crate;
 // diag_log [_items, _mags, _weapons, _containers, _backpackitems];
 
 {
