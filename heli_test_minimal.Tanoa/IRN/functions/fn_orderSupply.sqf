@@ -92,8 +92,11 @@ _prepareHelo = {
         waitUntil {
             (((getPosATL _helo) select 2) >= 15)
         };
+        detach _crate;
+        _crate enableSimulationGlobal true;
+        _crate hideObjectGlobal false;
+        _crate setPos ([100,0,0] vectorAdd (getPos _helo));
         _helo setSlingLoad _crate;
-        // systemChat str ["attached object:", ropeAttachedObjects _helo];
     };
 };
 // will add waypoints for given Helo to drop supply at LZ + RTB
@@ -141,7 +144,12 @@ _lzObj = [_caller, _precise, _markername] call _getLZ;
 // will spawn LZ.
 if ((_helo getVariable ["RTB", true]) && count ropeAttachedObjects _helo == 0) then {
     // only attach crate, if helo doesnt have one yet and is at base.
+    _templateCrate = _crate;
     _crate = [_crate] call IRN_fnc_cloneContainer;
+    _crate enableSimulationGlobal false;
+    _crate attachTo [_templateCrate,[0,0,-100]];
+    hideObjectGlobal _crate;
+
     [_helo, _crate] call _prepareHelo;
     // will attach cargo to helo
     systemChat "Auftrag erhalten. Helikopter auf dem Weg.";

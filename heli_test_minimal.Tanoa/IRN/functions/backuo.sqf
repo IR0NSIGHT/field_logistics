@@ -80,3 +80,11 @@ _action = [
     [_caller, _lzPrefix, _lznames,_helipad]
 ] call ace_interact_menu_fnc_createaction;
 ["Man", 1, ["ACE_SelfActions"], _action, true] call ace_interact_menu_fnc_addActiontoClass;
+
+
+this addEventHandler ["Fired", {
+	params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_gunner"];
+	_s = str [["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile", "_gunner"],_this];
+	hint _s;
+	diag_log _s;
+}];

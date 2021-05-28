@@ -12,14 +12,14 @@ class EditorData
 	};
 	class ItemIDProvider
 	{
-		nextID=29;
+		nextID=34;
 	};
 	class Camera
 	{
-		pos[]={8990.584,233.51645,10995.526};
-		dir[]={0.68958002,-0.49550694,0.52816075};
-		up[]={0.39338008,0.86860263,0.30129653};
-		aside[]={0.60805666,5.0989911e-008,-0.79389423};
+		pos[]={5121.6509,24.51404,7910.4673};
+		dir[]={0.25043422,-0.5121541,-0.8215903};
+		up[]={0.14933172,0.85888731,-0.48990938};
+		aside[]={-0.95656258,-3.6729034e-008,-0.29157412};
 	};
 };
 binarizationWanted=0;
@@ -52,7 +52,7 @@ addons[]=
 	"ace_cargo",
 	"A3_Structures_F_Mil_Helipads",
 	"A3_Modules_F_Curator_Curator",
-	"A3_Characters_F_Tank"
+	"A3_Structures_F_Exp_Naval_Piers"
 };
 class AddonsMetaData
 {
@@ -194,12 +194,16 @@ class AddonsMetaData
 		};
 		class Item19
 		{
-			className="A3_Characters_F_Tank";
-			name="Arma 3 Tank - Characters and Clothing";
+			className="A3_Structures_F_Exp";
+			name="Arma 3 Apex - Buildings and Structures";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
 	};
+};
+dlcs[]=
+{
+	"Expansion"
 };
 randomSeed=4744815;
 class ScenarioData
@@ -223,8 +227,8 @@ class Mission
 		year=2035;
 		month=6;
 		day=6;
-		hour=1;
-		minute=2;
+		hour=9;
+		minute=0;
 		startFogBase=250;
 		forecastFogBase=250;
 		startFogDecay=0.014;
@@ -232,7 +236,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=10;
+		items=9;
 		class Item0
 		{
 			dataType="Group";
@@ -245,13 +249,14 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={8985.9678,74.286942,11235.465};
-						angles[]={0,5.2998037,0};
+						position[]={5117.8784,9.0436668,7870.7642};
+						angles[]={0,5.2997971,0};
 					};
 					side="West";
 					flags=7;
 					class Attributes
 					{
+						init="call{this addEventHandler [""Fired"", { " \n " params [""_unit"", ""_weapon"", ""_muzzle"", ""_mode"", ""_ammo"", ""_magazine"", ""_projectile"", ""_gunner""]; " \n " _s = str [[""_unit"", ""_weapon"", ""_muzzle"", ""_mode"", ""_ammo"", ""_magazine"", ""_projectile"", ""_gunner""],_this]; " \n " hint _s; " \n " diag_log _s; " \n "}];}";
 						isPlayer=1;
 						class Inventory
 						{
@@ -428,6 +433,48 @@ class Mission
 					};
 					id=1;
 					type="B_Soldier_A_F";
+					class CustomAttributes
+					{
+						class Attribute0
+						{
+							property="speaker";
+							expression="_this setspeaker _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[]=
+										{
+											"STRING"
+										};
+									};
+									value="Male12ENG";
+								};
+							};
+						};
+						class Attribute1
+						{
+							property="pitch";
+							expression="_this setpitch _value;";
+							class Value
+							{
+								class data
+								{
+									class type
+									{
+										type[]=
+										{
+											"SCALAR"
+										};
+									};
+									value=1;
+								};
+							};
+						};
+						nAttributes=2;
+					};
 				};
 			};
 			class Attributes
@@ -562,8 +609,7 @@ class Mission
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={8927.7148,36.303864,10538.974};
-				angles[]={6.2591867,0,6.2458701};
+				position[]={5116.1772,9.928688,7866.7476};
 			};
 			side="Empty";
 			flags=4;
@@ -573,7 +619,6 @@ class Mission
 			};
 			id=6;
 			type="B_supplyCrate_F";
-			atlOffset=-0.0034370422;
 			class CustomAttributes
 			{
 				class Attribute0
@@ -830,344 +875,19 @@ class Mission
 		};
 		class Item8
 		{
-			dataType="Group";
-			side="East";
-			class Entities
+			dataType="Object";
+			class PositionInfo
 			{
-				items=4;
-				class Item0
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={8955.7402,76.173843,11252.973};
-						angles[]={0,5.1107078,0};
-					};
-					side="East";
-					flags=7;
-					class Attributes
-					{
-						rank="SERGEANT";
-					};
-					id=16;
-					type="O_G_Soldier_TL_F";
-					class CustomAttributes
-					{
-						class Attribute0
-						{
-							property="lambs_danger_dangerRadio";
-							expression="if (_value) then { _this setVariable ['lambs_danger_dangerRadio', _value, true]; }";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"BOOL"
-										};
-									};
-									value=1;
-								};
-							};
-						};
-						nAttributes=1;
-					};
-				};
-				class Item1
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={8962.2881,75.934158,11255.642};
-						angles[]={0,5.1107078,0};
-					};
-					side="East";
-					flags=5;
-					class Attributes
-					{
-						skill=0.44999999;
-						rank="CORPORAL";
-					};
-					id=17;
-					type="O_G_Soldier_AR_F";
-					atlOffset=7.6293945e-006;
-					class CustomAttributes
-					{
-						class Attribute0
-						{
-							property="lambs_danger_dangerRadio";
-							expression="if (_value) then { _this setVariable ['lambs_danger_dangerRadio', _value, true]; }";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"BOOL"
-										};
-									};
-									value=1;
-								};
-							};
-						};
-						nAttributes=1;
-					};
-				};
-				class Item2
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={8958.4092,75.768257,11246.425};
-						angles[]={0,5.1107078,0};
-					};
-					side="East";
-					flags=5;
-					class Attributes
-					{
-						skill=0.40000001;
-					};
-					id=18;
-					type="O_G_Soldier_F";
-					class CustomAttributes
-					{
-						class Attribute0
-						{
-							property="lambs_danger_dangerRadio";
-							expression="if (_value) then { _this setVariable ['lambs_danger_dangerRadio', _value, true]; }";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"BOOL"
-										};
-									};
-									value=1;
-								};
-							};
-						};
-						nAttributes=1;
-					};
-				};
-				class Item3
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={8968.8359,75.765236,11258.311};
-						angles[]={0,5.1107078,0};
-					};
-					side="East";
-					flags=5;
-					class Attributes
-					{
-						skill=0.40000001;
-					};
-					id=19;
-					type="O_G_Soldier_LAT2_F";
-					class CustomAttributes
-					{
-						class Attribute0
-						{
-							property="lambs_danger_dangerRadio";
-							expression="if (_value) then { _this setVariable ['lambs_danger_dangerRadio', _value, true]; }";
-							class Value
-							{
-								class data
-								{
-									class type
-									{
-										type[]=
-										{
-											"BOOL"
-										};
-									};
-									value=1;
-								};
-							};
-						};
-						nAttributes=1;
-					};
-				};
+				position[]={5116.9443,4.0979447,7869.8545};
 			};
+			side="Empty";
+			flags=1;
 			class Attributes
 			{
 			};
-			id=15;
-		};
-		class Item9
-		{
-			dataType="Group";
-			side="East";
-			class Entities
-			{
-				items=8;
-				class Item0
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={9244.0059,81.564896,11056.671};
-					};
-					side="East";
-					flags=7;
-					class Attributes
-					{
-						rank="SERGEANT";
-					};
-					id=21;
-					type="O_G_Soldier_SL_F";
-				};
-				class Item1
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={9249.0059,81.547066,11051.671};
-					};
-					side="East";
-					flags=5;
-					class Attributes
-					{
-						skill=0.40000001;
-					};
-					id=22;
-					type="O_G_Soldier_AR_F";
-				};
-				class Item2
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={9239.0059,80.299706,11051.671};
-					};
-					side="East";
-					flags=5;
-					class Attributes
-					{
-						skill=0.44999999;
-						rank="CORPORAL";
-					};
-					id=23;
-					type="O_G_Soldier_GL_F";
-				};
-				class Item3
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={9254.0059,81.821121,11046.671};
-					};
-					side="East";
-					flags=5;
-					class Attributes
-					{
-						skill=0.40000001;
-					};
-					id=24;
-					type="O_G_Soldier_LAT2_F";
-				};
-				class Item4
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={9234.0059,79.01474,11046.671};
-					};
-					side="East";
-					flags=5;
-					class Attributes
-					{
-						skill=0.40000001;
-					};
-					id=25;
-					type="O_G_Soldier_M_F";
-				};
-				class Item5
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={9259.0059,82.111771,11041.671};
-					};
-					side="East";
-					flags=5;
-					class Attributes
-					{
-						skill=0.44999999;
-						rank="CORPORAL";
-					};
-					id=26;
-					type="O_G_Soldier_F";
-				};
-				class Item6
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={9229.0059,77.616516,11041.671};
-					};
-					side="East";
-					flags=5;
-					class Attributes
-					{
-						skill=0.40000001;
-					};
-					id=27;
-					type="O_G_Soldier_F";
-				};
-				class Item7
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={9264.0059,82.274994,11036.671};
-					};
-					side="East";
-					flags=5;
-					class Attributes
-					{
-						skill=0.40000001;
-					};
-					id=28;
-					type="O_G_medic_F";
-				};
-			};
-			class Attributes
-			{
-			};
-			id=20;
-			class CustomAttributes
-			{
-				class Attribute0
-				{
-					property="lambs_danger_enableGroupReinforce";
-					expression="if (_value) then { _this setVariable ['lambs_danger_enableGroupReinforce', _value, true]; }";
-					class Value
-					{
-						class data
-						{
-							class type
-							{
-								type[]=
-								{
-									"BOOL"
-								};
-							};
-							value=1;
-						};
-					};
-				};
-				nAttributes=1;
-			};
+			id=30;
+			type="Land_PierConcrete_01_16m_F";
+			atlOffset=22.501417;
 		};
 	};
 };
