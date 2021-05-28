@@ -29,19 +29,33 @@ _lzPrefix = _lznames select 0;
 _lznames = _lznames - [_lzPrefix];
 _heliParams params ["_helos","_helipad","_crate"];
 
-diag_log [_helos,_helipad, _crate];
-//diag_log["[_caller, _lzPrefix, _lznames, _helo, _crate]", [_caller, _lzPrefix, _lznames, _helo, _crate]];
-diag_log["display name: ",_displayname];
+//publish helo array for manipulation on runtime
+missionNamespace setVariable["IRN_supplyHelos_helos",_helos,true];
+missionNamespace setVariable["IRN_supplyHelos_crate",_crate,true];
+
+//create action
 _action = [
     "Request supply",
     _displayname,
     "",
-    {
-        
-       
+    {       
         // action code	//todo give option for random babble.
-        (_this select 2) params ["_targetobj", "_lzPrefix", "_lznames", "_helos","_helipad", "_crate"];
-         _helo = (_helos select {alive _x}) select 0;
+        (_this select 2) params ["_targetobj", "_lzPrefix", "_lznames", "_helipad"];
+
+
+        //get crate to transport
+        _crate = missionNamespace getVariable ["IRN_supplyHelos_crate",crate_01];
+
+
+        //get helos, clean out dead ones
+        _helos = missionNamespace getVariable ["IRN_supplyHelos_helos",[supply_helo_01]] select {alive _x};
+        if (count _helos == 0) exitWith {
+            systemChat "Es gibt keinen verfügbaren Hubschrauber.";
+        };
+        _helo = _helos select 0;
+
+
+        //call order supply function
         _markername = _lzPrefix + (selectRandom _lznames);
         [_helo,_helipad,_targetobj, _crate, false, _markername] remoteExec ["IRN_fnc_orderSupply", 2, false];
 
@@ -57,14 +71,16 @@ _action = [
                 systemChat "Hubschrauber wieder einsatzbereit.";
             };
         };
+    },//statement
+    { //condition
+       (_target in (allCurators apply {getAssignedCuratorUnit _x}))
     },
-    {
-        true
-    },
-    {},
-    [_caller, _lzPrefix, _lznames, _helos,_helipad, _crate]
+    {}, //child code
+    [_caller, _lzPrefix, _lznames,_helipad]
 ] call ace_interact_menu_fnc_createaction;
-
 ["Man", 1, ["ACE_SelfActions"], _action, true] call ace_interact_menu_fnc_addActiontoClass;
+
+
+
 
 
