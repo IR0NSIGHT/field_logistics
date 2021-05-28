@@ -32,6 +32,7 @@ _heliParams params ["_helos","_helipad","_crate"];
 //publish helo array for manipulation on runtime
 missionNamespace setVariable["IRN_supplyHelos_helos",_helos,true];
 missionNamespace setVariable["IRN_supplyHelos_crate",_crate,true];
+missionNamespace setVariable["IRN_supplyHelos_lzNames",_lznames,true];
 
 //create action
 _action = [
@@ -40,12 +41,16 @@ _action = [
     "",
     {       
         // action code	//todo give option for random babble.
-        (_this select 2) params ["_targetobj", "_lzPrefix", "_lznames", "_helipad"];
-
+        (_this select 2) params ["_targetobj", "_lzPrefix", "_helipad"];
+        _lzNames = missionNamespace getVariable ["IRN_supplyHelos_lzNames",["dropoff point 01"]];
+        _lzName = (_lzNames select 0);
+        _lzNames = (_lzNames - [_lzName]);
+        _lznames pushBack _lzName;
+        missionNamespace setVariable ["IRN_supplyHelos_lzNames",_lzNames,true];
 
         //get crate to transport
-        _crate = missionNamespace getVariable ["IRN_supplyHelos_crate",crate_01];
-
+        _crate = missionNamespace getVariable ["IRN_supplyHelos_crate",crate_01];   //TODO only remove name if helo used it.
+        diag_log ["lzNames: ",IRN_supplyHelos_lzNames];
 
         //get helos, clean out dead ones
         _helos = missionNamespace getVariable ["IRN_supplyHelos_helos",[supply_helo_01]] select {alive _x && canMove _x};
@@ -56,7 +61,7 @@ _action = [
 
 
         //call order supply function
-        _markername = _lzPrefix + (selectRandom _lznames);
+        _markername = _lzPrefix + _lzName;
         [_helo,_helipad,_targetobj, _crate, false, _markername] remoteExec ["IRN_fnc_orderSupply", 2, false];
 
         //wait until helo is RTB to notify caller.
@@ -77,6 +82,6 @@ _action = [
        //TODO !isNull getAssignedCuratorLogic _unit // true if _unit is a zeus
     },
     {}, //child code
-    [_caller, _lzPrefix, _lznames,_helipad]
+    [_caller, _lzPrefix, _helipad]
 ] call ace_interact_menu_fnc_createaction;
 ["Man", 1, ["ACE_SelfActions"], _action, true] call ace_interact_menu_fnc_addActiontoClass;

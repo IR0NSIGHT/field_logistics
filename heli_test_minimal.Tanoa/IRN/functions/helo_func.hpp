@@ -8,5 +8,6 @@ class IRN {
     class getDir {};
     class addCallAction {};
     class orderSupply {};
+    class updateStateSupplyFSM {};
   };
 };

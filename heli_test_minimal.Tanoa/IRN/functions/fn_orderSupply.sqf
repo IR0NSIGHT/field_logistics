@@ -31,6 +31,7 @@ if (isNull _caller || isNull _crate) exitwith {
 };
 
 diag_log ["order supply was called with: ", _this];
+
 // get suitable LZ near player
 _getLZ = {
     params["_caller", "_precise", "_markername", "_pos"];
@@ -80,6 +81,7 @@ _lzObj = "land_HelipadEmpty_F" createvehicle _pos;
 };
 _lzObj
 };
+
 // will set helos variable to true and attach cargo to it.
 _prepareHelo = {
     params ["_helo", "_crate"];
@@ -142,8 +144,10 @@ if (count ropeAttachedObjects _helo == 0 and !(_helo getVariable ["RTB", true]))
 
 _lzObj = [_caller, _precise, _markername] call _getLZ;
 // will spawn LZ.
+// only attach crate, if helo doesnt have one yet and is at base.
 if ((_helo getVariable ["RTB", true]) && count ropeAttachedObjects _helo == 0) then {
-    // only attach crate, if helo doesnt have one yet and is at base.
+    
+    //create a cloned crate, hide it until the helo goes airborne.
     _templateCrate = _crate;
     _crate = [_crate] call IRN_fnc_cloneContainer;
     _crate enableSimulationGlobal false;

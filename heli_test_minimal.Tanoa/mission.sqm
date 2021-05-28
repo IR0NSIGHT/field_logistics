@@ -16,10 +16,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={5121.6509,24.51404,7910.4673};
-		dir[]={0.25043422,-0.5121541,-0.8215903};
-		up[]={0.14933172,0.85888731,-0.48990938};
-		aside[]={-0.95656258,-3.6729034e-008,-0.29157412};
+		pos[]={5103.0903,24.51404,7894.3906};
+		dir[]={0.49461547,-0.59087622,-0.63735455};
+		up[]={0.36225852,0.80676228,-0.46680129};
+		aside[]={-0.79001534,-1.4901161e-008,-0.61308706};
 	};
 };
 binarizationWanted=0;
@@ -253,7 +253,7 @@ class Mission
 						angles[]={0,5.2997971,0};
 					};
 					side="West";
-					flags=7;
+					flags=3;
 					class Attributes
 					{
 						init="call{this addEventHandler [""Fired"", { " \n " params [""_unit"", ""_weapon"", ""_muzzle"", ""_mode"", ""_ammo"", ""_magazine"", ""_projectile"", ""_gunner""]; " \n " _s = str [[""_unit"", ""_weapon"", ""_muzzle"", ""_mode"", ""_ammo"", ""_magazine"", ""_projectile"", ""_gunner""],_this]; " \n " hint _s; " \n " diag_log _s; " \n "}];}";
@@ -433,6 +433,7 @@ class Mission
 					};
 					id=1;
 					type="B_Soldier_A_F";
+					atlOffset=23.32243;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -481,6 +482,7 @@ class Mission
 			{
 			};
 			id=0;
+			atlOffset=23.32243;
 		};
 		class Item1
 		{
@@ -612,13 +614,13 @@ class Mission
 				position[]={5116.1772,9.928688,7866.7476};
 			};
 			side="Empty";
-			flags=4;
 			class Attributes
 			{
 				name="crate_01";
 			};
 			id=6;
 			type="B_supplyCrate_F";
+			atlOffset=23.314255;
 			class CustomAttributes
 			{
 				class Attribute0

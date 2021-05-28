@@ -26,9 +26,6 @@ if (isNull _clone) then {
     _clone = (typeOf _crate) createvehicle (getPos _crate);
     _clone setPos ([getPos _crate, 1, 30, 2] call BIS_fnc_findSafePos);
     [_clone] call IRN_fnc_clearContainer;
-    diag_log ["creating new clone container at: ",getPos _clone];
-    [_clone,"crate here"] call IRN_fnc_marker;  //TODO remove me
-
 };
 
 private ["_items", "_mags", "_weapons", "_containers", "_backpackitems"];
@@ -37,7 +34,6 @@ _mags = getmagazineCargo _crate;
 _weapons = weaponsItemsCargo _crate;
 _containers = everyContainer _crate;
  _backpackitems = backpackCargo _crate;
-// diag_log [_items, _mags, _weapons, _containers, _backpackitems];
 
 {
     _arr = _x;

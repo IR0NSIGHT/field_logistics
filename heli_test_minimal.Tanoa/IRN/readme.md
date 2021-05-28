@@ -40,3 +40,6 @@ missionNamespace setVariable["IRN_supplyHelos_crate",_this,true];
 )
 Spawn a new heli, execute this code on the heli:
 
+
+
+//TODO clonecrate for helo supply attach to original crate, not safepos (for spawn on offshore platforms f.e.)
