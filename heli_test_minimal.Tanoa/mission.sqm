@@ -16,10 +16,10 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={5103.0903,24.51404,7894.3906};
-		dir[]={0.49461547,-0.59087622,-0.63735455};
-		up[]={0.36225852,0.80676228,-0.46680129};
-		aside[]={-0.79001534,-1.4901161e-008,-0.61308706};
+		pos[]={8909.9092,49.994862,10506.033};
+		dir[]={0.66523117,-0.65515155,0.35811174};
+		up[]={0.57687443,0.75549746,0.31054696};
+		aside[]={0.47400784,1.4901161e-008,-0.88052064};
 	};
 };
 binarizationWanted=0;
@@ -765,8 +765,8 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={8926.5918,33.998039,10516.44};
-						angles[]={6.2192721,0,6.1821976};
+						position[]={8926.5918,33.998055,10516.439};
+						angles[]={6.2192717,0,6.1822004};
 					};
 					side="West";
 					flags=6;
@@ -776,15 +776,15 @@ class Mission
 					};
 					id=12;
 					type="B_Helipilot_F";
-					atlOffset=-0.03112793;
+					atlOffset=-0.03099823;
 				};
 				class Item1
 				{
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={8926.5918,33.998039,10516.44};
-						angles[]={6.2192721,0,6.1821976};
+						position[]={8926.5918,33.998055,10516.439};
+						angles[]={6.2192717,0,6.1822004};
 					};
 					side="West";
 					flags=4;
@@ -793,7 +793,7 @@ class Mission
 					};
 					id=13;
 					type="B_Helipilot_F";
-					atlOffset=-0.03112793;
+					atlOffset=-0.03099823;
 				};
 			};
 			class Attributes
@@ -832,15 +832,38 @@ class Mission
 				};
 			};
 			id=11;
-			atlOffset=-0.03112793;
+			atlOffset=-0.03099823;
+			class CustomAttributes
+			{
+				class Attribute0
+				{
+					property="groupID";
+					expression="[_this, _value] call CBA_fnc_setCallsign";
+					class Value
+					{
+						class data
+						{
+							class type
+							{
+								type[]=
+								{
+									"STRING"
+								};
+							};
+							value="Bigbird - 1";
+						};
+					};
+				};
+				nAttributes=1;
+			};
 		};
 		class Item7
 		{
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={8926.7705,35.763168,10516.278};
-				angles[]={6.2192721,0,6.1821976};
+				position[]={8926.7705,35.763184,10516.277};
+				angles[]={6.2192717,0,6.1822004};
 			};
 			side="West";
 			flags=6;
@@ -850,7 +873,7 @@ class Mission
 			};
 			id=14;
 			type="B_Heli_Light_01_F";
-			atlOffset=-0.03112793;
+			atlOffset=-0.03099823;
 			class CustomAttributes
 			{
 				class Attribute0

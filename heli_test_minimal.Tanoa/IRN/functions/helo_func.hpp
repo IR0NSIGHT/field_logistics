@@ -9,5 +9,6 @@ class IRN {
     class addCallAction {};
     class orderSupply {};
     class updateStateSupplyFSM {};
+    class initHeloFSM {};
   };
 };
