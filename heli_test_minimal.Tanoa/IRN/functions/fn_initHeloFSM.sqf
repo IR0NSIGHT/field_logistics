@@ -20,22 +20,27 @@ _helo setVariable ["IRN_heloSupply_stateFSM",_state,true];
 _index = player createDiarySubject ["IRN_supply","Logistics"];
 _record = player createDiaryRecord ["IRN_supply",[groupId (group _helo),"I am text!"]];
 
+_supplyState = 0;
 //TODO remove debug
-Order = [crate_01,[1000,0,1000],1];
+Order = [crate_01,[1000,0,1000],_supplyState];
 
 //start update loop
 while {alive _helo} do {
-	_state = ([
+	_arr = ([
 		//TODO isLanded test
 		//TODO getDangerType
 		//auto abort if crate not exist
 		supply_helo_02,
 		0,
 		supply_helo_02 distance2d airport_01,
-		getPos airport_01,
+		airport_01,
 		ropeAttachedObjects supply_helo_02,
-		true,
+		(getPosATL _helo select 2 < 3),
 		Order
 	] call IRN_fnc_updateStateSupplyFSM);
+	_state = _arr select 0;
+	_supplyState = _arr select 1;
+	
+	Order = [crate_01,[1000,0,1000],_supplyState];
 	sleep 10;
 }
