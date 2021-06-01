@@ -33,11 +33,8 @@ _log = {
 	if (!_exists) then {
 		_index = player createDiarySubject ["IRN_supply","Logistics"];
 	};
-	_timestamp = [daytime] call BIS_fnc_timeToString;
-	_record = _helo getVariable["IRN_supply_record", player createDiaryRecord [_subjectID,[groupId (group _helo)," UWU! "]]];
+	_record = player createDiaryRecord [_subjectID,[groupId (group _helo),_mssg]];
 
-	_timestamp +" - "+ _mssg
-	_helo setVariable["IRN_supply_record",_record,false];
 };
 
 _clearWP = {
@@ -54,10 +51,11 @@ _setDeliverWP = {
 };
 
 _setRTP_WP = {
+	systemChat "setting RTB";
 	[_heloGrp] call _clearWP;
-	_wp = _heloGrp addWaypoint [_heloBase,-1,0,"RTB"];
+	_wp = _heloGrp addWaypoint [getPosASL _heloBase,-1,0,"RTB"];
 	_wp setWaypointCompletionRadius 5;
-	_wp setWaypointTimeout [5, 5, 5];
+	_wp setWaypointTimeout [60,60,60];
 };
 
 //correct false destination position
@@ -106,10 +104,7 @@ switch (_state) do {
 			_nextState = 3; //RTB bc not at base
 			["Helo is moving to new base."] call _log;
 
-			//TODO waypoint to new base
-			[_heloGrp] call _clearWP;
-			_wp = _heloGrp addWaypoint [_heloBase,-1,0,"RTB"];
-			
+			[] call _setRTP_WP;	
 		};
 	};
 	case 1: {
@@ -120,8 +115,7 @@ switch (_state) do {
 			["Danger/Order cancelled. RTB"] call _log;
 			_supplyState = -1;	//aborted //TODO refine supply states.
 			
-			[_heloGrp] call _clearWP;
-			_wp = _heloGrp addWaypoint [_heloBase,-1,0,"RTB"];
+			[] call _setRTP_WP;	
 		};
 
 		//successfull hook with object
@@ -140,10 +134,8 @@ switch (_state) do {
 			_nextState = 3;
 			["Danger/order cancelled. Cutting ropes, RTB"] call _log;
 			_supplyState = -2;	//LOST
-			//TODO cut ropes + wp to base
-			_helo setSlingLoad objNull;
-			[_heloGrp] call _clearWP;
-			_wp = _heloGrp addWaypoint [_heloBase,-1,0,"RTB"];
+			_helo setSlingLoad objNull;	//cut ropes
+			[] call _setRTP_WP;
 		};
 		//todo fallthrough to successfull unhook?
 		//TODO test if cargo is actually at destination.
@@ -152,29 +144,25 @@ switch (_state) do {
 			_nextState = 3;
 			["Helo dropped off cargo, RTB"] call _log;
 			_supplyState = 0;	//SUCCESS
-			//TODO wp to base
-			[_heloGrp] call _clearWP;
-			_wp = _heloGrp addWaypoint [_heloBase,-1,0,"RTB"];
-			_wp setWaypointCompletionRadius 5;
+			[] call _setRTP_WP;	
 		};
 
 		//make sure the WP is still at the wanted coords
 		if (_supplyState > 0 && ((waypointPosition [_heloGrp,0]) distance2D _supplyDestination) > 5) exitWith {
 			//waypoint is off. recreate WP.
-			["Redirecting Helo to base."] call _log;
+			["Redirecting Helo to new dropoff point."] call _log;
 			[] call _setDeliverWP;
 		}
 	};
 	case 3: {
 		//close to base, start landing there.
-		if (_distanceToBase < 10) exitWith {
+		if (_distanceToBase < 100) exitWith {
 			_nextState = 4;
 			["Landing at base."] call _log;
 
 			//TODO land at base WP
 			[_heloGrp] call _clearWP;
-			//_wp = _heloGrp addWaypoint [_heloBase,0,0,"RTB"];
-			_helo land "LAND";	//didnt work?
+			_helo land "LAND";
 		};
 
 		if (_dangerType == 0 && _supplyState > 0) exitWith {
@@ -191,10 +179,10 @@ switch (_state) do {
 		};
 
 		//make sure helo has an RTB WP.
-		if (waypoints _heloGrp isEqualTo [] || (waypointPosition [_heloGrp,0] distance2D _heloBase) > 5) then {
+		if (waypoints _heloGrp isEqualTo [] || (waypointPosition [_heloGrp,0] distance2D _heloBase) > 150) then {
 			["Redirecting to base."] call _log;
+			[] call _setRTP_WP;	
 		};
-
 	};
 	case 4: {
 		//TODO check if helicopter is landed
@@ -204,6 +192,7 @@ switch (_state) do {
 			_nextState = 0;
 			["Helo is landed at base."] call _log;
 		};
+		_helo land "LAND";
 	};
 	default {
 

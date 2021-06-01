@@ -12,14 +12,14 @@ class EditorData
 	};
 	class ItemIDProvider
 	{
-		nextID=50;
+		nextID=51;
 	};
 	class Camera
 	{
-		pos[]={8787.9688,51.37923,10449.279};
-		dir[]={-0.5532763,-0.55473733,0.62141114};
-		up[]={-0.36888656,0.83202547,0.41431415};
-		aside[]={0.74686539,2.9802322e-008,0.66497511};
+		pos[]={8981.1094,112.62131,10466.611};
+		dir[]={-0.66446382,-0.61903673,0.41866627};
+		up[]={-0.5237425,0.78536195,0.33000043};
+		aside[]={0.53308696,-2.9802322e-008,0.84606051};
 	};
 };
 binarizationWanted=0;
@@ -232,7 +232,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=21;
+		items=22;
 		class Item0
 		{
 			dataType="Group";
@@ -761,7 +761,7 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={8927.9902,88.004623,10528.077};
+						position[]={8780,88.001434,10459.05};
 					};
 					side="West";
 					flags=2;
@@ -771,14 +771,14 @@ class Mission
 					};
 					id=12;
 					type="B_Helipilot_F";
-					atlOffset=53.619999;
+					atlOffset=53.612633;
 				};
 				class Item1
 				{
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={8927.9902,88.004623,10528.077};
+						position[]={8780,88.001434,10459.05};
 					};
 					side="West";
 					class Attributes
@@ -786,7 +786,7 @@ class Mission
 					};
 					id=13;
 					type="B_Helipilot_F";
-					atlOffset=53.619999;
+					atlOffset=53.612633;
 				};
 			};
 			class Attributes
@@ -825,7 +825,7 @@ class Mission
 				};
 			};
 			id=11;
-			atlOffset=53.619999;
+			atlOffset=53.610634;
 			class CustomAttributes
 			{
 				class Attribute0
@@ -855,18 +855,18 @@ class Mission
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={8928.1787,89.766808,10527.888};
+				position[]={8780.1885,89.763618,10458.86};
 			};
 			side="West";
 			flags=2;
 			class Attributes
 			{
-				init="call{[this,getPosASL airport_01,0] spawn IRN_fnc_initHeloFSM;}";
+				init="call{[this,getPosAsl airport_01,2] spawn IRN_fnc_initHeloFSM;}";
 				name="supply_helo_02";
 			};
 			id=14;
 			type="B_Heli_Light_01_F";
-			atlOffset=53.619999;
+			atlOffset=53.610634;
 			class CustomAttributes
 			{
 				class Attribute0
@@ -1419,6 +1419,23 @@ class Mission
 				};
 				nAttributes=1;
 			};
+		};
+		class Item21
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={8895.8779,35.82095,10539.508};
+				angles[]={6.2751913,0,6.2431998};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+				name="dropoff_01";
+			};
+			id=50;
+			type="Land_JumpTarget_F";
 		};
 	};
 };

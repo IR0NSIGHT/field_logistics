@@ -26,8 +26,9 @@ Order = [crate_01,[1000,0,1000],_supplyState];
 
 //start update loop
 while {alive _helo} do {
+	(driver _helo) setSkill 1;
+
 	_arr = ([
-		//TODO isLanded test
 		//TODO getDangerType
 		//auto abort if crate not exist
 		supply_helo_02,
@@ -35,12 +36,14 @@ while {alive _helo} do {
 		supply_helo_02 distance2d airport_01,
 		airport_01,
 		ropeAttachedObjects supply_helo_02,
-		(getPosATL _helo select 2 < 3),
+		isTouchingGround _helo,
 		Order
 	] call IRN_fnc_updateStateSupplyFSM);
 	_state = _arr select 0;
 	_supplyState = _arr select 1;
-	
-	Order = [crate_01,[1000,0,1000],_supplyState];
-	sleep 10;
+
+	Order = [Order select 0, Order select 1,_supplyState];
+
+
+	sleep 5;
 }
