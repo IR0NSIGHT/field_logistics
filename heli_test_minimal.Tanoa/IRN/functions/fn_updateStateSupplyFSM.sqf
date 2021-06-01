@@ -24,6 +24,7 @@ if (isNull _heloBase) exitWith {
 };
 
 _log = {
+	//TODO newest log is furthest up in entry?
 	params[["_mssg","no mssg",["uwu"]]];
 	diag_log[_mssg];
 	systemChat _mssg;
@@ -33,7 +34,8 @@ _log = {
 	if (!_exists) then {
 		_index = player createDiarySubject ["IRN_supply","Logistics"];
 	};
-	_record = player createDiaryRecord [_subjectID,[groupId (group _helo),_mssg]];
+	_mssg = ([daytime,"HH:MM:SS"] call BIS_fnc_timeToString) + " " + _mssg;
+	_record = player createDiaryRecord [_subjectID,[groupId (group _helo),_mssg],taskNull,"",false];
 
 };
 
