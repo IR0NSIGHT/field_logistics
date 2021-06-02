@@ -27,23 +27,25 @@ Order = [crate_01,[1000,0,1000],_supplyState];
 //start update loop
 while {alive _helo} do {
 	(driver _helo) setSkill 1;
-
-	_arr = ([
-		//TODO getDangerType
-		//auto abort if crate not exist
-		supply_helo_02,
-		0,
-		supply_helo_02 distance2d airport_01,
-		airport_01,
-		ropeAttachedObjects supply_helo_02,
-		isTouchingGround _helo,
-		Order
-	] call IRN_fnc_updateStateSupplyFSM);
-	_state = _arr select 0;
-	_supplyState = _arr select 1;
-
-	Order = [Order select 0, Order select 1,_supplyState];
-
-
+	_supplyOrderMap = missionNamespace getVariable ["supplyOrders",[]];
+	if (!(_supplyOrderMap isEqualTo [])) then {
+		_order = _supplyOrderMap getOrDefault [vehicleVarName _helo,[objNull,[0,0,0],-1]];
+		_arr = ([
+			//TODO getDangerType
+			//auto abort if crate not exist
+			_helo,
+			0,
+			_helo distance2d airport_01,
+			airport_01,
+			ropeAttachedObjects _helo,
+			isTouchingGround _helo,
+			_order
+		] call IRN_fnc_updateStateSupplyFSM);
+		_state = _arr select 0;
+		_supplyState = _arr select 1;
+		_order set [2,_supplyState];	//why you no work
+		_supplyOrderMap set [vehicleVarName _helo,_order];
+	};
+	
 	sleep 5;
 }

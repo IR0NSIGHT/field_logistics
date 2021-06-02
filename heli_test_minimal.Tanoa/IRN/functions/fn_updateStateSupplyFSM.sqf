@@ -16,7 +16,7 @@ params [
 _supplyOrder params [
 	["_supplyCargo",objNull],
 	["_supplyDestination",[0,0,0]],
-	["_supplyState",0]	//0 = no order, 1 == cancelled, 
+	["_supplyState",-12]	//0 = no order, 1 == cancelled, 
 ];
 
 if (isNull _heloBase) exitWith {
@@ -40,12 +40,10 @@ _log = {
 };
 
 _clearWP = {
-	params["_grp"];
 	{
-		deleteWaypoint [_grp,0];
-	} foreach (waypoints _grp)
-};
-
+		deleteWaypoint [_heloGrp,0];
+	} foreach (waypoints _heloGrp)
+}; 
 _setDeliverWP = {
 	[_heloGrp] call _clearWP;
 	_wp = _heloGrp addWaypoint [_supplyDestination,-1,0,"dropoff"];

@@ -10,5 +10,8 @@ class IRN {
     class orderSupply {};
     class updateStateSupplyFSM {};
     class initHeloFSM {};
+    class supplyChain {
+      prestart = 1;
+    };
   };
 };
