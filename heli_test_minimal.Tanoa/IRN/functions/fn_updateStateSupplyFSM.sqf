@@ -26,16 +26,16 @@ if (isNull _heloBase) exitWith {
 _log = {
 	//TODO newest log is furthest up in entry?
 	params[["_mssg","no mssg",["uwu"]]];
-	diag_log[_mssg];
-	systemChat _mssg;
+//	diag_log[_mssg];
+//	systemChat _mssg;
 	//get helos varname => is 
 	_subjectID = "IRN_supply";
-	_exists = player diarySubjectExists "subjectName";
+	_exists = player diarySubjectExists _subjectID;
 	if (!_exists) then {
 		_index = player createDiarySubject ["IRN_supply","Logistics"];
 	};
 	_mssg = ([daytime,"HH:MM:SS"] call BIS_fnc_timeToString) + " " + _mssg;
-	_record = player createDiaryRecord [_subjectID,[groupId (group _helo),_mssg],taskNull,"",false];
+	_record = player createDiaryRecord [_subjectID,["helo log",_mssg],taskNull,"",false];
 
 };
 
@@ -44,18 +44,26 @@ _clearWP = {
 		deleteWaypoint [_heloGrp,0];
 	} foreach (waypoints _heloGrp)
 }; 
-_setDeliverWP = {
+_setDeliver_WP = {
 	[_heloGrp] call _clearWP;
 	_wp = _heloGrp addWaypoint [_supplyDestination,-1,0,"dropoff"];
 	_wp setWaypointType "UNHOOK";
 };
 
 _setRTP_WP = {
-	systemChat "setting RTB";
 	[_heloGrp] call _clearWP;
 	_wp = _heloGrp addWaypoint [getPosASL _heloBase,-1,0,"RTB"];
 	_wp setWaypointCompletionRadius 5;
 	_wp setWaypointTimeout [60,60,60];
+};
+
+_setPickup_WP = {
+	["Helo is moving to pickup point."] call _log;
+
+	[_heloGrp] call _clearWP;
+	_wp = _heloGrp addWaypoint [getPosASL _supplyCargo,-1,0,"pickup"];
+	_wp waypointAttachVehicle _supplyCargo;
+	_wp setWaypointType "HOOK";
 };
 
 //correct false destination position
@@ -91,12 +99,7 @@ switch (_state) do {
 		//supply order, go pickup stuff
 		if (_dangerType == 0 && _supplyState > 0) exitWith {
 			_nextState = 1; //pickup
-			["Helo is moving to pickup point."] call _log;
-
-			[_heloGrp] call _clearWP;
-			_wp = _heloGrp addWaypoint [getPosASL _supplyCargo,-1,0,"pickup"];
-			_wp waypointAttachVehicle _supplyCargo;
-			_wp setWaypointType "HOOK";
+			[] call _setPickup_WP;
 		};
 
 		//new base assigned, helo still at old one
@@ -125,7 +128,12 @@ switch (_state) do {
 			["Cargo is hooked. Moving to target destination."] call _log;
 
 			
-			[] call _setDeliverWP;
+			[] call _setDeliver_WP;
+		};
+
+		//test if wp is correct
+		if (((waypoints _helo) isEqualTo []) || ((waypointPosition (waypoints _heloGrp select 0)) distance2D (getPosASL _supplyCargo)) > 100) exitWith {
+			[] call _setPickup_WP;
 		}
 	};
 	case 2: {
@@ -133,7 +141,9 @@ switch (_state) do {
 		if (_dangerType > 0 || _supplyState <= 0) exitWith {
 			_nextState = 3;
 			["Danger/order cancelled. Cutting ropes, RTB"] call _log;
-			_supplyState = -2;	//LOST
+			if (_dangerType > 0) then {
+				_supplyState = -2;	//LOST
+			};
 			_helo setSlingLoad objNull;	//cut ropes
 			[] call _setRTP_WP;
 		};
@@ -151,7 +161,7 @@ switch (_state) do {
 		if (_supplyState > 0 && ((waypointPosition [_heloGrp,0]) distance2D _supplyDestination) > 5) exitWith {
 			//waypoint is off. recreate WP.
 			["Redirecting Helo to new dropoff point."] call _log;
-			[] call _setDeliverWP;
+			[] call _setDeliver_WP;
 		}
 	};
 	case 3: {
@@ -172,10 +182,7 @@ switch (_state) do {
 			["Order received. Moving to pickup point"] call _log;
 
 			//TODO waypoint to pickup
-			[_heloGrp] call _clearWP;
-			_wp = _heloGrp addWaypoint [getPosASL _supplyCargo,-1,0,"pickup"];
-			_wp waypointAttachVehicle _supplyCargo;
-			_wp setWaypointType "HOOK";
+			[] call _setPickup_WP;
 		};
 
 		//make sure helo has an RTB WP.
@@ -199,16 +206,14 @@ switch (_state) do {
 	};
 };
 if (_state == _nextState) then {
-	systemChat "no change.";
+
 };
 
 if (_nextState == -1) then {
 	["Helo supply FSM produced invalid state -1 for state: (%0)",_state] call BIS_fnc_error
 };
 
-//set next state
-_helo setVariable ["IRN_heloSupply_stateFSM",_nextState,true];
-diag_log["heli went from state: ",_state,"to",_nextState ,"with danger",_dangerType," supply state",_supplyState];
+//["heli went from state: "+ str _state+"to"+str _nextState +"with danger"+str _dangerType +" supply state"+ str _supplyState] call _log;
 
 //return
 [_nextState,_supplyState];

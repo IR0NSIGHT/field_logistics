@@ -12,14 +12,14 @@ class EditorData
 	};
 	class ItemIDProvider
 	{
-		nextID=53;
+		nextID=55;
 	};
 	class Camera
 	{
-		pos[]={8726.4648,186.15793,10347.304};
-		dir[]={0.45775297,-0.65622485,0.5998593};
-		up[]={0.39809519,0.75456542,0.52168119};
-		aside[]={0.79497325,1.4901161e-008,-0.60664451};
+		pos[]={9012.0518,195.6839,10401.271};
+		dir[]={-0.4530167,-0.51135015,0.73027623};
+		up[]={-0.26955745,0.85936946,0.43453506};
+		aside[]={0.84977794,-2.1157757e-007,0.52714741};
 	};
 };
 binarizationWanted=0;
@@ -761,7 +761,7 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={8696,90.001434,10428.05};
+						position[]={8878.0654,89.987457,10523.914};
 					};
 					side="West";
 					flags=2;
@@ -771,14 +771,14 @@ class Mission
 					};
 					id=12;
 					type="B_Helipilot_F";
-					atlOffset=53.707985;
+					atlOffset=53.678001;
 				};
 				class Item1
 				{
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={8696,90.001434,10428.05};
+						position[]={8878.0654,89.987457,10523.914};
 					};
 					side="West";
 					class Attributes
@@ -786,7 +786,7 @@ class Mission
 					};
 					id=13;
 					type="B_Helipilot_F";
-					atlOffset=53.707985;
+					atlOffset=53.678001;
 				};
 			};
 			class Attributes
@@ -825,7 +825,7 @@ class Mission
 				};
 			};
 			id=11;
-			atlOffset=53.706913;
+			atlOffset=53.678001;
 			class CustomAttributes
 			{
 				class Attribute0
@@ -855,18 +855,18 @@ class Mission
 			dataType="Object";
 			class PositionInfo
 			{
-				position[]={8696.1035,91.770157,10427.854};
+				position[]={8878.127,91.762901,10523.799};
 			};
 			side="West";
 			flags=2;
 			class Attributes
 			{
-				init="call{[this,getPosAsl airport_01,2] spawn IRN_fnc_initHeloFSM;}";
+				init="call{[]spawn supplyChain;}";
 				name="supply_helo_02";
 			};
 			id=14;
 			type="B_Heli_Light_01_F";
-			atlOffset=53.706913;
+			atlOffset=53.678001;
 			class CustomAttributes
 			{
 				class Attribute0
